@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+    <link rel="stylesheet" href="../../../../css/app/style.css" type="text/css" media="screen, projection">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    <script src="../../../vendor-static/jquery.min.js"></script>
+    <script src="../../../vendor/angular/angular.js"></script>
+    <script src="../../../bootstrap.js"></script>
+    <script type="text/javascript">
+    angular.module('ds.communities', ['ds.communities.controllers']);
+    </script>
+    <script type="text/javascript" src="https://cameras59.community-demo.sapjam.com/widget/javascript/community.ui.widget.js"></script>
+    <script type="text/javascript" src="../controllers/community-widget-ctrl.js"></script>
+</head>
+<body ng-app="ds.communities" ng-controller="CommunitiesWidgetController" class="app-root">
+  <div class="container search-container">
+    <div class="row">
+			<div class="col-md-4" id="cFacetNav"></div>
+			<div class="col-md-8" id="cSearchRes"></div>
+	  </div>
+   </div>
+</body>
+</html>

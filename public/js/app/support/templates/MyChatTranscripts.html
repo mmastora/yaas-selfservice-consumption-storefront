@@ -1,0 +1,50 @@
+<div class="container-fluid">
+	<!-- List of Product Registrations -->
+	
+	 
+
+	<ul class="nav nav-tabs">
+	  <li class="active"><a data-toggle="tab" href="#myOrders">My Transcripts</a></li>
+	 
+	</ul>
+
+	 
+	  <div id="myOrders" class="tab-pane fade in active">
+	   <section ng-cloak>
+    <div class="container-fluid">
+
+         <div ng-repeat="m_chat in chatTranscripts" class="col-sm-12 col-xs-12">
+            
+            <div class="panel">
+                <div class="panel-body " >
+                    <div class="row">
+                        <div class="col-sm-12 col-xs-12 leftCol">
+                            <p>
+                              <strong>{{'CREATED_BY'}}:</strong>
+                              {{m_chat.createdBy}}
+                            </p>
+                            <p>
+                                <strong>{{'CHAT_CONTENT'}}</strong><br/>
+                                 {{m_chat.chatContent}}
+                            </p>
+                           
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <br />
+        </div>
+ 
+
+      
+
+    </div>
+
+  </section>
+	  </div>
+	   
+	</div>
+
+
+</div>

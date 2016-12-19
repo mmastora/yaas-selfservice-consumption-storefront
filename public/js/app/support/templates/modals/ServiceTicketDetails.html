@@ -1,0 +1,91 @@
+<!--Step 1-->
+
+<div class="modal-header" ng-cloak>
+	<button type="button" class="close" ng-click="cancel()"
+		data-dismiss="modal">
+		<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	</button>
+	<h4 class="modal-title">{{'SERVICE_TICKET_DETAILS' | translate}}</h4>
+</div>
+
+<form class="form-horizontal" name="updateUserInfoForm"
+	ng-submit="updateUserInfo()" novalidate stop-event="touchend">
+	<fieldset>
+		<div class="modal-body">
+			<div class="container-fluid">
+				<div class="form-group">
+					<label class="col-lg-4 custom-control-label">{{'SERVICE_TICKET_NUMBER'
+						| translate}}</label>
+					<div class="col-lg-8">
+						<input type="text" class="form-control" id="ticked_number"
+							name="ticked_number" ng-model="ticketDetailObject.ticketNumber" disabled>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-4 custom-control-label">{{'SERVICE_TICKET_DESCRIPTION'|
+						translate}}</label>
+					<div class="col-lg-8">
+						<textarea id="cartItemNote"
+							ng-model="ticketDetailObject.shortDescription"
+							ng-disabled="ticketDetailObject.status=='CONFIRMED'"
+							class="form-control" rows="3">
+                                </textarea>
+					</div>
+				</div>
+
+
+				<div class="form-group" ng-if="ticketDetailObject.productName">
+					<label class="col-lg-4 custom-control-label">{{'PRODUCT_NAME'
+						| translate}}</label>
+					<div class="col-lg-8">
+						<input type="text" class="form-control" id="ticket_status"
+							name="ticket_status" ng-model="ticketDetailObject.productName"
+							disabled>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-4 custom-control-label">{{'SERVICE_TICKET_TYPE'|
+						translate}}</label>
+					<div class="col-lg-8">
+						<input type="text" class="form-control" id="ticked_type"
+							name="ticked_type" ng-model="ticketDetailObject.type" disabled>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-4 custom-control-label">{{'SERVICE_TICKET_STATUS'
+						| translate}}</label>
+					<div class="col-lg-8">
+						<select class="form-control input-md"
+							ng-model="ticketDetailObject.status" disabled>
+							<option
+								ng-selected="{{setting.status == ticketDetailObject.status}}"
+								ng-repeat="setting in serviceTicketStatus"
+								value="{{setting.status}}">{{setting.description}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="error" ng-if="error">{{error}}</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<div class="row">
+				<div class="col-xs-1"></div>
+				<button type="button" ng-click="cancel()" id="cancel-btn"
+					class="btn btn-secondary col-xs-3">{{'CANCEL' |
+					translate}}</button>
+				<button type="button"
+					ng-hide="ticketDetailObject.status == 'CONFIRMED'"
+					ng-click="updateTicket(ticketDetailObject.id)"
+					class="btn btn-primary col-xs-3">{{'UPDATE' | translate}}</button>
+
+				<button type="submit" id="save-btn" class="btn btn-success col-xs-3"
+					ng-hide="ticketDetailObject.status == 'CONFIRMED'"
+					ng-click="confirmTicket(ticketDetailObject.id)">{{'CONFIRM'
+					| translate}}</button>
+			</div>
+		</div>
+	</fieldset>
+</form>

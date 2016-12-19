@@ -1,0 +1,278 @@
+H2 {
+	color: white;
+	display: inline;
+	vertical-align: middle;
+	margin-left: 10px;
+	margin-right: 10px;
+	font-style: normal;
+	font-size: 26px;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+div.header {
+	opacity: 0.4;
+	width: 100%; height : 75px; vertical-align : middle; white-space :
+	nowrap;
+	/* padding-top: 6px; */
+	z-index: 50;
+	border: 0px solid dimgrey;
+	position: absolute;
+	background-color: #828B91;
+	height: 75px;
+	vertical-align: middle;
+	white-space: nowrap;
+}
+
+div.videoOffBar {
+	width: 100%;
+	height: 70px;
+	vertical-align: middle;
+	white-space: nowrap;
+	padding-top: 6px;
+	z-index: 10;
+	border: 0px solid dimgrey;
+	top: 75px;
+	position: absolute;
+}
+
+img.videoOffBtn {
+	visibility: hidden;
+	margin-right: 10px;
+}
+
+.img {
+	vertical-align: middle;
+	max-height: 65px;
+	max-width: 65px;
+}
+
+img.imgVideoOn {
+	vertical-align: middle;
+	max-height: 65px;
+	max-width: 65px;
+	visibility: hidden;
+	padding-left: 514px;
+	padding-top: 5px;
+}
+
+.myCssVideoRemote {
+	background: black;
+	border: solid 0px Gray;
+	box-shadow: 0px 0px 0px DimGray;
+	cursor: default;
+	left: 0px;
+	margin: 0px;
+	opacity: 1.0;
+	overflow: hidden;
+	position: relative;
+	height: 378px;
+	width: 100%;
+	top: 0px;
+	-webkit-transform: rotate(0.000001deg);
+	//
+	NOTE
+	!
+	This
+	is
+	needed
+	for
+	border
+	styling
+	within
+	Chrome.
+}
+
+.myCssVideoRemote VIDEO {
+	width: 100%;
+	height: auto;
+}
+
+.sapEcfVideoContainer {
+	width: 100%;
+	padding-left: 1%;
+}
+
+.sap-desktop {
+	padding-left: 2%;
+}
+
+.myCssVideoLocal {
+	float: top;
+	background: black;
+	border: solid 1px Gray;
+	box-shadow: 0px 0px 0px DimGray;
+	cursor: default;
+	margin: 0px;
+	opacity: 0.8;
+	overflow: hidden;
+	position: relative;
+	top: -80px;
+	height: 70px;
+	width: 90px;
+	z-index: 1;
+	-webkit-transform: rotate(0.000001deg);
+	//
+	NOTE
+	!
+	This
+	is
+	needed
+	for
+	border
+	styling
+	within
+	Chrome.
+}
+
+.myCssVideoLocal VIDEO {
+	width: auto;
+	height: 100%;
+}
+
+div.text {
+	background-color: white;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 12px;
+}
+
+.chatInput {
+	width: 400px;
+	height: 70px;
+}
+
+.chatPlacement {
+	top: -75px;
+}
+
+.spacer {
+	height: 75px;
+	position: relative;
+}
+
+.chatInput:focus {
+	outline: 0px !important;
+	-webkit-appearance: none !important;
+	border-color: #cccccc !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.chatInput:hover {
+	outline: 0px !important;
+	-webkit-appearance: none !important;
+	border-color: #cccccc !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.btnSend {
+	height: 100px;
+	position: relative;
+	top: 15px;
+	float: right;
+	right: -5px;
+	width: 99px;
+	background-color: transparent;
+}
+
+.btnSend:focus {
+	outline: 0px !important;
+	-webkit-appearance: none;
+	border-color: #cccccc;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+.chatTranscript {
+	border: solid 0px #e2e2e2 !important;
+	-webkit-appearance: none !important;
+	width: 100%;
+	position: absolute !important;
+}
+
+.chatTranscriptTopAdjust {
+	top: 377px;
+}
+
+.chatTranscript::-webkit-input-placeholder {
+	font-size: 12px !important;
+}
+
+.chatTranscript:hover {
+	outline: 0px !important;
+	-webkit-appearance: none !important;
+	border-color: #cccccc !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.chatTranscript:focus {
+	outline: 0px !important;
+	-webkit-appearance: none !important;
+	border-color: #cccccc !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.hlayout {
+	position: absolute;
+	width: 100%;
+	-webkit-appearance: none;
+	border-top: solid 1px #d3d3d3;
+	background-color: transparent;
+	background: white;
+	top: 224px;
+}
+
+.hlayoutForText {
+	position: absolute;
+	width: 100%;
+	-webkit-appearance: none;
+	border-top: solid 1px #d3d3d3;
+	background-color: transparent;
+	background: white;
+	top: 300px;
+}
+
+.hlayoutTopAdjust {
+	top: 520px;
+}
+
+.hlayout:hover {
+	outline: 0px !important;
+	-webkit-appearance: none !important;
+	border-color: #cccccc !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.hlayout:focus {
+	outline: 0px !important;
+	-webkit-appearance: none !important;
+	border-color: #cccccc !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+}
+
+.body::-webkit-scrollbar {
+	width: 0 !important
+}
+
+.sapMTextAreaInner {
+	border: none;
+	background-color: transparent;
+}
+
+.sapMTextAreaInner:disabled {
+	background-color: transparent;
+	border: none;
+}
+
+.sapUiHLayoutChildWrapper {
+	background-color: white;
+	border: none;
+}
+
+.sapMBtnText>.sapMBtnIcon {
+	width: 100%;
+}

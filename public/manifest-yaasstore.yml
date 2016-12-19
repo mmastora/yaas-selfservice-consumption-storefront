@@ -1,0 +1,11 @@
+---
+applications:
+- name: servicestore
+  host: servicestore
+  domain: yaas.io  
+  command: npm run-script startServerMulti
+  #command: npm run-script start
+  buildpack: https://github.com/heroku/heroku-buildpack-nodejs.git
+  memory: 512M
+  instances: 1
+  path: ./

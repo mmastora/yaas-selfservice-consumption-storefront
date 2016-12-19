@@ -1,0 +1,50 @@
+<div class="container-fluid">
+	<!-- List of Product Registrations -->
+
+	<h1 class="pageTitle">{{'MY_PRODUCT_REGISTRATIONS' | translate}}</h1>
+
+	<section>
+
+		<div id="myRegisteredProducts" class="tab-pane fade in active">
+
+			<div ng-repeat="product in productRegistrations">
+				<div class="myRegisteredProduct-item row">
+					<div class="col-md-2"></div>
+					<div class="col-md-8">
+						<div class="col-xs-3 col-md-3 text-center img-col">
+							<img
+								ng-src="{{ product && product.productImageURL || PLACEHOLDER_IMAGE}}"
+								class="img-responsive" height="100" width="100"
+								style="align: center" />
+						</div>
+						<div class="col-xs-4 col-md-3 text-center">
+							<a ng-if="this.isCommunitiesEnabled()==true" ng-click="openCommunitiesWidget(product.productName)">View
+								Community Posts</a>
+						</div>
+						<div class="col-xs-5 col-md-6  detail-col">
+							<div class="row">
+								<div class="col-xs-12">
+									<h5 class="price item-attr strong">{{product.productName}}</h5>
+									<div class="price item-attr">
+										{{'SERIAL_NUMBER' | translate}}: <span>
+											{{product.productSerialNo}}</span>
+									</div>
+									<div class="price item-attr">
+										{{'DATE_PURCHASED' | translate}}: <span>
+											{{product.datePurchased | date:"MM/dd/yyyy"}}</span>
+									</div>
+									<div class="price item-attr">
+										{{'DATE_CREATED' | translate}}: <span>
+											{{product.metadata.createdAt | date:"MM/dd/yyyy"}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-2"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+<!-- List of Product Registrations ends-->

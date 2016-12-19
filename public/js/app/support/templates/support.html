@@ -1,0 +1,391 @@
+<div class="container-fluid">
+
+	<div class="container-fluid"
+		style="margin-left: 2%; margin-right: 2%; min-height: 900px">
+		<div class="row" class="white" ng-cloak>
+			<!-- Search registerable products -->
+			<div id="messageAlertSupportScreen"
+				ng-if="productRegisterErrorMessage" class="alert alert-info"
+				ng-controller="SupportCtrl">{{productRegisterErrorMessage}}</div>
+		</div>
+		<div class="row">
+			<div class="y-search" ng-controller="SupportProductSearchCtrl">
+				<form novalidate ng-submit="selectProduct()">
+					<div class="right-inner-addon">
+						<i ng-class="{'active': showSearchResults}"
+							class="glyphicon glyphicon-search js-glyphicon"></i>
+						<h4 class="strong">{{'SEARCH_SUPPORT' | translate}}</h4>
+						<input id="registerableProductSearch" autocomplete="off"
+							type="search" placeholder="{{'SEARCH_SUPPORT' | translate}}"
+							class="y-input form-control input-md" ng-model="searchString"
+							ng-change="searchProduct(searchString)"
+							ng-focus="showSearchResults()"
+							class="y-input form-control input-md" />
+					</div>
+					<div class="y-search-container"
+						ng-show="search.showSearchResults && search.results.length > 0">
+						<a class="form-control y-search-results"
+							ng-repeat="result in search.results"
+							ng-click="selectProduct(result)">
+							<div class="attribute">
+								<span class="y-search-result-name text-left"
+									ng-bind-html="result.name.en"></span>
+							</div>
+						</a>
+					</div>
+
+					<div class="y-search-container y-search-unavailable"
+						ng-if="search.showSearchResults && search.searchError">
+						<div class="y-search-unavailable-text">{{'SEARCH_UNAVAILABLE'
+							| translate}}</div>
+					</div>
+					<div class="y-search-container y-search-unavailable"
+						ng-if="search.showSearchResults && !search.searchError && search.zeroResults">
+						<div class="y-search-unavailable-text">{{'NO_RESULTS_FOUND'
+							| translate}}</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<!--ash-->
+		<div ng-if="supportSvc.selectedProduct" class="panel panel-default"
+			style="height: auto; padding: 15px">
+
+
+			<div class="row">
+				<div class="col-xs-4 col-md-2 text-center img-col">
+					<img
+						ng-src="{{ supportSvc.selectedProduct && supportSvc.selectedProduct.media[0].url || PLACEHOLDER_IMAGE}}"
+						class="img-responsive" height="100" width="100"
+						style="align: center" />
+				</div>
+				<div class="col-xs-8 col-md-10  detail-col">
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="row">
+								<div class="col-xs-12 col-sm-6 col-md-8">
+									<div class="sp-product-name">
+										<strong>{{supportSvc.selectedProduct.name}}</strong>
+									</div>
+									</br>
+								</div>
+								<div class="col-sm-6 col-md-4">
+									<ul style="list-style: none;">
+										<li><a ng-click="openProductDetails(product.product.id)"
+											ui-sref="base.product.detail( {productId: supportSvc.selectedProduct.id, lastCatId: lastCatId} )">{{'VIEW_PRODUCT_DETAILS'
+												| translate}}</a></li>
+										<li><a href="" ng-if="this.isCommunitiesEnabled()==true"
+											ng-click="this.openCommunitiesWidget(supportSvc.selectedProduct.name)">{{'VIEW_COMMUNITY_POSTS'
+												| translate}}</a></li>
+									</ul>
+								</div>
+								<div class="col-xs-12">
+									<div class="sp-product-desc hidden-xs">{{supportSvc.selectedProduct.description}}</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+		<!--ash-->
+
+		<div class="hidden-sm hidden-xs row row-eq-height">
+			<div class="col-sm-7 support-message-bg">
+				<div class="h4 support-msg-div pull-right">
+					{{'SUPPORT_HEADLINE_LINE_1' | translate}}<br /> <br />{{'SUPPORT_HEADLINE_LINE_2'
+					| translate}}
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<p>
+					<a class="btn btn-sq btn-primary"
+						ng-click="navigateToregisterProduct()"> <i
+						class="fa fa-registered fa-5x"></i><br />{{'SUPPORT_REGISTER_PRODUCT_LINE_1'
+						| translate}}<br />{{'SUPPORT_REGISTER_PRODUCT_LINE_2' |
+						translate}}
+					</a> <a class="btn btn-sq btn-success"
+						ng-click="navigateToCreateServiceTicket()"> <i
+						class="fa fa-ticket fa-5x"></i><br />{{'SUPPORT_CREATE_TICKET_LINE_1'
+						| translate}}<br />{{'SUPPORT_CREATE_TICKET_LINE_2' | translate}}
+					</a> <a class="btn btn-sq btn-warning" ng-click="gotoChat()"> <i
+						class="fa fa-phone fa-5x"></i><br />{{'SUPPORT_CONTACT_AGENT' |
+						translate}}
+					</a> <a class="btn btn-sq bg-color-teal" ng-click="gotoMyOrders()">
+						<i class="fa fa-list-alt fa-5x"></i><br />{{'SUPPORT_MY_ORDERS' |
+						translate}}
+					</a> <a class="btn btn-sq bg-color-purple"
+						ng-click="gotoMySupportTickets()"> <i
+						class="fa fa-life-ring fa-5x"></i><br />{{'SUPPORT_MY_TICKETS_LINE_1'
+						| translate}}<br />{{'SUPPORT_MY_TICKETS_LINE_2' | translate}}
+					</a> <a class="btn btn-sq btn-color-yellowgreen"
+						ng-click="gotoMySupportProdRegs()"> <i
+						class="fa fa-barcode fa-5x"></i><br />{{'SUPPORT_MY_REGISTRATIONS_LINE_1'
+						| translate}}<br />{{'SUPPORT_MY_REGISTRATIONS_LINE_2' |
+						translate}}
+					</a> <a ng-if="this.isCommunitiesEnabled()==true"
+						ng-href="{{getCommunityHomeURL()}}" target="_blank"
+						class="btn btn-sq" style="background-color: #C0C0C0"> <i
+						class="fa fa-commenting-o fa-5x"></i><br />{{'COMMUNITIES' |
+						translate}}
+					</a>
+				</p>
+			</div>
+		</div>
+		<!-- 
+=============================
+iPAD section
+=============================
+ -->
+		<div class="hidden-xs hidden-md hidden-lg">
+			<div class="row col-sm-12">
+				<div class="support-message-sm-bg">
+					<div class="h5 support-msg-sm-div pull-right">
+						{{'SUPPORT_HEADLINE_LINE_1' | translate}}<br /> <br />{{'SUPPORT_HEADLINE_LINE_2'
+						| translate}}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="carousel slide multi-item-carousel" id="supportTilesSM">
+						<div class="carousel-inner" id=corouselInnerSM>
+							<div class="item active" id="regProduct">
+								<div class="col-xs-4">
+									<a class="btn btn-primary btn-sq"
+										ng-click="navigateToregisterProduct()"> <i
+										class="fa fa-registered fa-5x"></i><br />{{'SUPPORT_REGISTER_PRODUCT_LINE_1'
+										| translate}}<br />{{'SUPPORT_REGISTER_PRODUCT_LINE_2' |
+										translate}}
+									</a>
+								</div>
+							</div>
+							<div class="item" id="createTicket">
+								<div class="col-xs-4">
+									<a class="btn btn-success btn-sq"
+										ng-click="navigateToCreateServiceTicket()"> <i
+										class="fa fa-ticket fa-5x"></i><br />{{'SUPPORT_CREATE_TICKET_LINE_1'
+										| translate}}<br />{{'SUPPORT_CREATE_TICKET_LINE_2' |
+										translate}}
+									</a>
+								</div>
+							</div>
+							<div class="item" id="contactAgent">
+								<div class="col-xs-4">
+									<a class="btn btn-warning btn-sq" ng-click="gotoChat()"> <i
+										class="fa fa-phone fa-5x"></i><br />{{'SUPPORT_CONTACT_AGENT'
+										| translate}}
+									</a>
+								</div>
+							</div>
+							<div class="item" id="myOrders">
+								<div class="col-xs-4">
+									<a class="btn bg-color-teal btn-sq" ng-click="gotoMyOrders()">
+										<i class="fa fa-list-alt fa-5x"></i><br />{{'SUPPORT_MY_ORDERS'
+										| translate}}
+									</a>
+								</div>
+							</div>
+							<div class="item" id="myTickets">
+								<div class="col-xs-4">
+									<a class="btn bg-color-purple btn-sq"
+										ng-click="gotoMySupportTickets()"> <i
+										class="fa fa-life-ring fa-5x"></i><br />{{'SUPPORT_MY_TICKETS_LINE_1'
+										| translate}}<br />{{'SUPPORT_MY_TICKETS_LINE_2' |
+										translate}}
+									</a>
+								</div>
+							</div>
+							<div class="item" id="myRegistrations">
+								<div class="col-xs-4">
+									<a class="btn btn-color-yellowgreen btn-sq"
+										ng-click="gotoMySupportProdRegs()"> <i
+										class="fa fa-barcode fa-5x"></i><br />{{'SUPPORT_MY_REGISTRATIONS_LINE_1'
+										| translate}}<br />{{'SUPPORT_MY_REGISTRATIONS_LINE_2' |
+										translate}}
+									</a>
+								</div>
+							</div>
+							<div ng-if="this.isCommunitiesEnabled()==true" class="item"
+								id="communities">
+								<div class="col-xs-4">
+									<a ng-href="{{getCommunityHomeURL()}}" target="_blank"
+										class="btn btn-sq btn-sq" style="background-color: #C0C0C0">
+										<i class="fa fa-commenting-o fa-5x"></i><br />{{'COMMUNITIES'
+										| translate}}
+									</a>
+								</div>
+							</div>
+
+							<!--  Example item end -->
+						</div>
+						<a ng-non-bindable class="left carousel-control"
+							href="#supportTilesSM" data-slide="prev"><i
+							class="glyphicon glyphicon-chevron-left"></i></a> <a ng-non-bindable
+							class="right carousel-control" href="#supportTilesSM"
+							data-slide="next"><i
+							class="glyphicon glyphicon-chevron-right"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="hidden-sm hidden-md hidden-lg">
+			<div class="row col-sm-12">
+				<div class="support-message-xs-bg">
+					<div class="h6 support-msg-div">
+						{{'SUPPORT_HEADLINE_LINE_1' | translate}}<br /> <br />{{'SUPPORT_HEADLINE_LINE_2'
+						| translate}}
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="carousel slide multi-item-carousel-xs"
+						id="supportTilesXS">
+						<div class="carousel-inner" id="corouselInnerXS">
+							<div class="item active">
+								<div class="col-xs-12">
+									<a class="btn btn-primary btn-sq-xs-support"
+										ng-click="navigateToregisterProduct()"><div
+											class="sq-content-sm">
+											<div>
+												<i class="fa fa-registered fa-4x"></i><br />{{'SUPPORT_REGISTER_PRODUCT_LINE_1'
+												| translate}} {{'SUPPORT_REGISTER_PRODUCT_LINE_2' |
+												translate}}
+											</div>
+										</div> </a>
+								</div>
+							</div>
+							<div class="item">
+								<div class="col-xs-12">
+									<a class="btn btn-success btn-sq-xs-support"
+										ng-click="navigateToCreateServiceTicket()">
+										<div class="sq-content-sm">
+											<div>
+												<i class="fa fa-ticket fa-4x"></i><br />{{'SUPPORT_CREATE_TICKET_LINE_1'
+												| translate}} {{'SUPPORT_CREATE_TICKET_LINE_2' | translate}}
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="item">
+								<div class="col-xs-12">
+									<a class="btn btn-warning btn-sq-xs-support"
+										ng-click="gotoChat()"><div class="sq-content-sm">
+											<div>
+												<i class="fa fa-phone fa-4x"></i><br />{{'SUPPORT_CONTACT_AGENT'
+												| translate}}
+											</div>
+										</div> </a>
+								</div>
+							</div>
+							<div class="item">
+								<div class="col-xs-12">
+									<a class="btn bg-color-teal btn-sq-xs-support"
+										ng-click="gotoMyOrders()">
+										<div class="sq-content-sm">
+											<div>
+												<i class="fa fa-list-alt fa-4x"></i><br />{{'SUPPORT_MY_ORDERS'
+												| translate}}
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="item">
+								<div class="col-xs-12">
+									<a class="btn bg-color-purple btn-sq-xs-support"
+										ng-click="gotoMySupportTickets()"><div
+											class="sq-content-sm">
+											<div>
+												<i class="fa fa-life-ring fa-4x"></i><br />{{'MY_SUPPORT_TICKETS'
+												| translate}}
+											</div>
+										</div> </a>
+								</div>
+							</div>
+							<div class="item">
+								<div class="col-xs-12">
+									<a class="btn btn-color-yellowgreen btn-sq-xs-support"
+										ng-click="gotoMySupportProdRegs()">
+										<div class="sq-content-sm">
+											<div>
+												<i class="fa fa-barcode fa-4x"></i><br />{{'SUPPORT_MY_REGISTRATIONS_LINE_1'
+												| translate}} {{'SUPPORT_MY_REGISTRATIONS_LINE_2' |
+												translate}}
+											</div>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="item" ng-if="this.isCommunitiesEnabled()==true">
+								<div class="col-xs-12">
+									<a ng-href="{{getCommunityHomeURL()}}" target="_blank"
+										class="btn btn-sq-xs-support"
+										style="background-color: #C0C0C0"><div
+											class="sq-content-sm">
+											<div>
+												<i class="fa fa-commenting-o fa-4x"></i><br />{{'COMMUNITIES'
+												| translate}}
+											</div>
+										</div> </a>
+								</div>
+							</div>
+
+							<!--  Example item end -->
+						</div>
+						<a ng-non-bindable class="left carousel-control"
+							href="#supportTilesXS" data-slide="prev"><i
+							class="glyphicon glyphicon-chevron-left"></i></a> <a ng-non-bindable
+							class="right carousel-control" href="#supportTilesXS"
+							data-slide="next"><i
+							class="glyphicon glyphicon-chevron-right"></i> </a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<br>
+<script>
+	var myCarousel = $(".carousel");
+	myCarousel.append("<ol class='carousel-indicators'></ol>");
+
+	var indicators = $(".carousel-indicators");
+	indicators.addClass('carouselindicatorsMargin');
+	myCarousel.find("#corouselInnerXS").children(".item").each(function(index) {
+		console.log($(this));
+		if (index === 0) {
+			indicators.append("<li data-target='#supportTilesXS' data-slide-to='"+index+"' class='active'></li>")
+		} else {
+			indicators.append("<li data-target='#supportTilesXS' data-slide-to='"+index+"'></li>");
+		}
+	});
+
+	<!--then call carousel-->
+	$('.carousel').carousel();
+
+	$('.multi-item-carousel').carousel({
+		interval : false
+	});
+
+	// for every slide in carousel, copy the next slide's item in the slide.
+	// Do the same for the next, next item.
+	$('.multi-item-carousel .item').each(function() {
+		var next = $(this).next();
+		if (!next.length) {
+			next = $(this).siblings(':first');
+		}
+		next.children(':first-child').clone().appendTo($(this));
+
+		if (next.next().length > 0) {
+			next.next().children(':first-child').clone().appendTo($(this));
+		} else {
+			$(this).siblings(':first').children(':first-child').clone().appendTo($(this));
+		}
+	});
+</script>
+<!-- Search registerable products ends-->

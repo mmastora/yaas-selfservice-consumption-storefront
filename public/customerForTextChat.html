@@ -1,0 +1,424 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="css/style.css">
+
+<script id="sap-ui-bootstrap" type="text/javascript"
+	src="https://openui5.hana.ondemand.com/1.36.6/resources/sap-ui-core.js"
+	data-sap-ui-libs="sap.ui.commons,sap.m">
+</script>
+
+
+
+<script type="text/javascript">
+//window.addEventListener("window_post_message", receiveMessage, false);
+
+	var that;
+	var tenantId = window.location.pathname.replace(/^\/([^\/]*).*$/, '$1');
+		
+		var testTenant = "devsese";
+		var cctrServer = "https://<yourSAPContactCenter>.com/" 
+		if (tenantId === undefined || tenantId === null || tenantId.indexOf(".html") > -1)
+		{
+			tenantId = testTenant;
+		}
+
+	if (window.addEventListener) {
+	// For standards-compliant web browsers
+		window.addEventListener("message", receiveMessage, false);
+	}
+	else {
+		window.attachEvent("onmessage", receiveMessage);
+	}
+	if (!window.location.origin) {
+		window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+	}
+
+	function receiveMessage(event){
+		//	alert (event.email);
+			if (event.origin !== window.location.origin)
+				return
+			that = this;
+			if (event.data.method === "removeScrolling")
+				{
+				
+				}
+			else if(event.data === "closetextchat"){
+				this.closePopup();
+			}
+			else if(event.data.method === "sendChatInvite")
+				{
+				this.origin =  event.origin;
+				this.custEmail = "Anonymous";
+				this.custAlias = "Anonymous";
+				this.custDisplayName = "Anonymous"
+				if (event.data.customerEmail!= undefined)
+				{
+					this.custEmail = event.data.customerEmail;
+					this.custAlias = event.data.customerEmail;
+				}
+				if (event.data.firstName != undefined)
+				{
+					this.custAlias= event.data.firstName;
+					this.custDisplayName = event.data.firstName;
+				}
+				//product id
+				if (event.data.productId != undefined)
+				{
+					this.custProductId= event.data.productId;
+					
+				}
+				
+				if (!ecfSession.getIsConnected()){
+					this.connectToCctr();
+				}
+				else{
+					/* this.init();				
+					setTimeout(function(){ that.sendChatInvite();}, 2000); */
+				}
+			}
+		}
+
+	//Register a path to the SAP ECF resources
+	var modulePath = cctrServer + tenantId + "/ecf/resources/sap/ecf/";
+         jQuery.sap.registerModulePath("sap.ecf", modulePath);
+	 try{
+        jQuery.sap.require("sap.ecf.sap-ecf");
+      }
+      catch(e){}
+</script>
+
+<script type="text/javascript">
+	//Include SAP ECF resources
+	jQuery.sap.require("sap.ecf.core.Session");
+	jQuery.sap.require("jquery.sap.resources");
+	jQuery.sap.require("sap.ecf.core.Session");
+	jQuery.sap.require("sap.ecf.controls.Popup");	
+	jQuery.sap.require("sap.ecf.controls.Video");
+	jQuery.sap.require("sap.m.Button");
+	jQuery.sap.require("sap.ecf.controls.VideoToggle");
+	jQuery.sap.require("sap.ecf.controls.ChatInput");
+	jQuery.sap.require("sap.ecf.controls.SendChat");
+	jQuery.sap.require("sap.ecf.controls.ChatTranscript");
+	jQuery.sap.require("sap.ecf.controls.Interaction");
+	jQuery.sap.require("sap.ecf.controls.Hangup");
+	jQuery.sap.require("sap.m.ButtonType");
+	jQuery.sap.require("sap.m.Image");
+	jQuery.sap.require("sap.m.MessageBox");
+	
+	jQuery.sap.log.setLevel(jQuery.sap.log.Level.DEBUG);
+	
+	
+	var ecfSession, ecfInitConfig, widgetToggle, widgetVideo, widgetVideoLocal; 
+	var chatInput, chatTranscript, sendChat, hangup, layout, hlayout, spacer, dialog, chatTranscriptText = null;
+	this.init();
+		
+	function init()	{
+		
+		ecfInitConfig = new sap.ecf.models.InitConfig();
+		ecfSession = sap.ecf.core.Session.getInstance();
+		
+		this.isConfirmDialogUsed = true;
+		
+		if (this.widgetInteraction === undefined){
+			this.widgetInteraction = new sap.ecf.controls.Interaction({hiddenMode:true});
+			this.widgetInteraction.unregisterInteractionView(sap.ecf.core.Constants.interaction_channel.CHAT);
+
+			
+			this.widgetInteraction.attachQueuedInteraction(this.queuedInteraction, this);
+			this.widgetInteraction.attachIncomingInteraction(this.newInteraction, this);
+			this.widgetInteraction.attachRemovingInteraction(this.removingInteraction,this);
+			this.widgetInteraction.attachAcceptedInteraction(this.acceptedInteraction, this);
+			ecfSession.attachConnected(this.ecfConnected, this);
+			ecfSession.attachDisconnected(this.onDisconnect, this);
+		}
+		
+		//this.widgetInteraction = new sap.ecf.controls.Interaction({hiddenMode:true});
+		//this.widgetInteraction.unregisterInteractionView(sap.ecf.core.Constants.interaction_channel.CHAT);
+
+		chatTranscript = new sap.ecf.controls.ChatTranscript({
+			rows: 1,
+			cols: 50,
+			value: "",
+			height: "220px",
+			width: "100%"
+		});
+		chatTranscript.addStyleClass("chatTranscript text")
+		
+		chatInput = new sap.ecf.controls.ChatInput({
+				value: ""
+		});
+		chatInput.onAfterRendering = function() {
+			
+			if (jQuery.sap.byId(chatTranscript.sId)[0] != undefined && chatTranscriptText != null){
+				jQuery.sap.byId(chatTranscript.sId)[0].innerHTML = chatTranscriptText;
+			}
+		}
+
+		chatInput.setHideIndicator(true);
+		chatInput.addStyleClass("chatInput text")
+		
+		if (typeof(chatInput.setRows) === typeof(Function)){
+			chatInput.setRows(4);
+			chatInput.setCols(40);
+			chatInput._mTextArea.attachBrowserEvent("keydown", function(evt){
+				
+				if (sendChat.getIcon() === "imgcctr/send_active.png" && (getChatContentLength()===0 || evt.keyCode == 13))
+					{
+						sendChat.setIcon("imgcctr/send_inactive.png");
+					}
+				else if (sendChat.getIcon() ==="imgcctr/send_inactive.png" && getChatContentLength()>0)
+					{
+						sendChat.setIcon("imgcctr/send_active.png");
+					}
+				
+				jQuery.sap.log.info("Key up event fired-" + getChatContentLength());
+			});
+			
+			chatInput._mTextArea.setPlaceholder("Type your message here");
+		}
+		else{
+			chatInput.setHeight("90%");
+			chatInput.setWidth("92%");
+			chatInput.setHideIndicator(true);
+		}
+		sendChat = new sap.ecf.controls.SendChat({
+			text: ""
+		});
+		sendChat.setChatInput(chatInput);
+		sendChat.addStyleClass("btnSend");
+		sendChat.setIcon("imgcctr/send_inactive.png");
+		sendChat.attachPress(this.buttonPress, sendChat);
+		chatInput.setSendChat(sendChat);
+
+		hangup = new sap.ecf.controls.Hangup({hiddenMode:true});
+		
+		hlayout = new sap.ui.layout.HorizontalLayout( {
+			content: [chatInput, sendChat]
+		});
+		
+		hlayout.addStyleClass("hlayoutForText")
+		spacer = new sap.m.Image({src: "imgcctr/spacer.png", visible:true});
+		spacer.addStyleClass("spacer");
+
+		layout = new sap.ui.layout.VerticalLayout( {
+			content: [spacer, chatTranscript, hlayout, this.widgetInteraction, hangup]
+		});
+		
+		layout.placeAt("interactions");
+	
+	}
+	
+	 function buttonPress(){
+	}
+	
+	$( document ).ready(function() {
+		
+	});
+	function connectToCctr(){
+		chatTranscriptText = null;
+		//Set the URL for SAP ECF Server
+		var cctrUrl = cctrServer + tenantId + "/visitor/ecfs";
+		ecfInitConfig.setCctrUrl(cctrUrl);
+		ecfInitConfig.setLocale("en");			
+		ecfInitConfig.setAuthenticationType("Anonymous");
+			//Instantiate Session object
+		ecfSession.connect(ecfInitConfig);	
+		jQuery.sap.log.info("Connecting to ECF server");
+	  	ecfSession.attachAuthFail(function(evt) {
+			alert('AuthFail --- showLoginForm()');
+    	});    
+		
+	}
+	
+	function ecfConnected(evt) {
+		jQuery.sap.log.info("ecf session connected");
+		setTimeout(function(){ that.sendChatInvite();}, 1000);
+	}
+	
+	function sendChatInvite(){
+		var queue = "chat@cecenteryaas.sapcctr.com";
+		subChannelType = "text";
+		ecfSession.publishEvent("initiateChat", {
+			"queue": queue, "channelType": "chat", "subChannelType": subChannelType,
+			"alias" : this.custAlias, "message": "pls help, customer from storefront.",
+			"chat_address" : this.custEmail, "attached_data": {"displayName": this.custDisplayName, "Email": this.custEmail,"productId":this.custProductId}
+		});
+	 }
+	
+	function queuedInteraction(evt){
+		var eventId = evt.sId;
+		var eventSrc =  evt.oSource;
+		var oInteraction = evt.mParameters.oInteraction;
+		jQuery.sap.log.info("queuedInteraction fired");
+		if (this.interactionStatus != evt.mParameters.oInteraction.status){
+			this.interactionStatus = evt.mParameters.oInteraction.status;
+			var oInteraction = evt.mParameters.oInteraction;
+			hangup.setInteractionByID(oInteraction.id);	
+			chatTranscript.setInteractionByID(oInteraction.id);
+			chatInput.setInteractionByID(oInteraction.id);
+			sendChat.setInteractionByID(oInteraction.id);	
+			
+			//setVideoWidgetDraggable(widgetVideoLocal);
+			if (evt.mParameters.oInteraction.channel_sub_type === "video")
+			{
+				document.getElementById('videoOff').style.visibility = 'visible';
+				this.autoVideo = true; // set the status to queueing
+			}
+		}
+	}
+
+
+	function newInteraction(evt) {
+
+	}
+	
+	function acceptedInteraction(evt){
+	//	alert ("acceptedInteraction");
+		var eventId = evt.sId;
+		var eventSrc =  evt.oSource;
+		var oInteraction = evt.mParameters.oInteraction;
+		
+		if (this.interactionStatus != evt.mParameters.oInteraction.status){
+			this.interactionStatus = evt.mParameters.oInteraction.status;
+			document.getElementById('alias').innerHTML  = evt.mParameters.oInteraction.participants[1].alias
+		}
+	}
+	
+	function removingInteraction(evt){
+		this.interactionStatus = evt.mParameters.oInteraction.status;
+		jQuery.sap.log.info("removing interaction");
+		var agentname = "Agent";
+		if (evt.mParameters.oInteraction.participants[1] != undefined){
+			agentname = evt.mParameters.oInteraction.participants[1].alias;
+		 }
+		// The note that agent has left.. sp9 backward compatible code, todo add sp10 code 
+
+		ecfSession.disconnect();
+		if (typeof(chatInput.setRows) === typeof(Function))
+		{
+			chatInput._mTextArea.detachBrowserEvent();
+		}
+		
+		if (this.interactionStatus != "queued"){ 
+			if (typeof(chatInput.setRows) === typeof(Function)){
+				chatTranscript.setValue(chatTranscript.getValue() + agentname + " has left the chat." );
+			}
+			else{
+				chatTranscriptText = jQuery.sap.byId(chatTranscript.sId)[0].innerHTML + " " + agentname + " has left the chat."
+				jQuery.sap.byId(chatTranscript.sId)[0].innerHTML = chatTranscriptText;
+			}
+		}
+	}
+	
+	
+	function cleanDisconnectedSession(){
+
+		// remove the previous chat context
+	//	var chatTranscript_inner = chatTranscript.getId() + "-inner";
+	//	var textarea = jQuery.sap.byId(chatTranscript_inner); 
+	//	textarea.val("");
+		
+		document.getElementById('alias').innerHTML= "";
+		chatTranscriptText= null;
+		sap.ui.getCore().getUIArea("interactions").removeAllContent()
+		//document.getElementById('startVideo').style.visibility = 'hidden';
+		//document.getElementById('videoOff').style.visibility = 'hidden';
+
+		this.interactionStatus = null;
+		this.init();
+		jQuery.sap.log.info("cleanDisconnectedSession done");
+	}
+	
+	function onDisconnect(evt){
+		jQuery.sap.byId(chatTranscript.sId)[0].innerHTML = chatTranscriptText;
+		ecfSession.detachConnected(this.ecfConnected);
+		ecfSession.detachDisconnected(this.onDisconnect);
+		ecfSession.detachAuthFail();
+		//widgetVideo.setHiddenMode(true);
+		//widgetVideoLocal.setHiddenMode(true);
+		
+		if (this.isConfirmDialogUsed){
+			cleanDisconnectedSession();
+		}
+	}
+	
+	function closePopup(){
+       //sap.ui.commons.MessageBox.confirm
+        //("Clicking OK will end your interaction with the agent. Are you sure that you want to continue?" ,fnCallback, "");
+        //dialog.open();
+        //$('#myModal').modal();
+        fnCallback(true);
+     
+        
+        
+	}
+	
+	function fnCallback(sResult){
+		if (sResult === true){
+			that.isConfirmDialogUsed = true;
+			if (that.ecfSession.getIsConnected() && that.hangup !== undefined){
+				that.hangup.buttonPress();
+			}else{
+				that.cleanDisconnectedSession();
+			}
+			parent.postMessage("CloseTextChat",that.origin);
+		}
+		else{
+			parent.postMessage("ShowTextChat",that.origin);
+		}
+  	}
+
+	function getRandomEmail() { 
+	    var strValues="ab12"; 
+	    var strEmail = ""; 
+	    var strTmp; 
+	    for (var i=0;i<10;i++) { 
+	        strTmp = strValues.charAt(Math.round(strValues.length*Math.random())); 
+	        strEmail = strEmail + strTmp; 
+	    } 
+	    strEmail = strEmail; 
+	    return strEmail; 
+	}  
+
+	function getChatContentLength()	{
+		var length = 0;
+		if (chatInput) {
+			var chatInput_inner = chatInput._mTextArea.getId() + "-inner";
+			var textarea = jQuery.sap.byId(chatInput_inner); 
+			length= textarea.val().length;
+		}
+		return length;
+	}
+	
+	this.notifyEnableTextChatButton();
+	function notifyEnableTextChatButton(){
+		parent.postMessage("notifyEnableTextChatButton",window.location.origin);
+		
+	}
+
+</script>
+
+</head>
+<body  role="application" id="content">
+<div class="header"> 
+	<H2 style="position: inherit;" id="alias"></h2>
+	
+</div>
+<!-- <div class="videoOffBar">
+</div> -->
+<div id="interactions"/>
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3 id="myModalLabel">Modal header</h3>
+    </div>
+    <div class="modal-body">
+        <p>One fine body…</p>
+    </div>
+    <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+        <button class="btn btn-primary">Save changes</button>
+    </div>
+</div>
+</body>
+</html>

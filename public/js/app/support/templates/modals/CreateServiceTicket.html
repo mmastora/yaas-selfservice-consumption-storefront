@@ -1,0 +1,85 @@
+<!--Step 1-->
+
+<div class="modal-header" ng-cloak>
+	<button type="button" class="close" ng-click="cancel()"
+		data-dismiss="modal">
+		<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	</button>
+	<h4 class="modal-title">{{'SERVICE_TICKET_CREATE' | translate}}</h4>
+</div>
+
+<form class="form-horizontal" name="createNewServiceTicketForm"
+	novalidate stop-event="touchend">
+	<fieldset>
+		<div class="modal-body">
+			<div class="container-fluid">
+
+				<div class="form-group">
+					<label class="col-lg-4 custom-control-label">{{'SERVICE_TICKET_DESCRIPTION'|
+						translate}}</label>
+					<div class="col-lg-8">
+						<textarea id="cartItemNote"
+							ng-model="newServiceTicket.shortDescription" class="form-control"
+							rows="3" ng-change="getCommunitySuggestions()"></textarea>
+              <div ng-if="communitySuggestions && communitySuggestions.length > 0" class="form-group community-suggestions col-lg-12">
+                <span>{{'SUGGESTED_POSTS' | translate}}</span>
+                <ul>
+                  <li ng-repeat="s in communitySuggestions">
+                    <a ng-href="{{s.ConversationWebUrl}}" target="_blank" ng-click="showConfirmation()">{{s.Title}}</a>
+                  </li>
+              </ul>
+              </div>
+					</div>
+				</div>
+
+				<div class="form-group" ng-if="selectedProductImage">
+					<label class="col-lg-4 custom-control-label">{{'PRODUCT' |
+						translate}}</label>
+					<div class="col-lg-8">
+						<img ng-src="{{selectedProductImage}}" class="img-responsive"
+							height="100" width="100" style="align: center" />
+					</div>
+				</div>
+
+				<div class="form-group" ng-if="selectedProductName">
+					<label class="col-lg-4 custom-control-label">{{'PRODUCT_NAME'
+						| translate}}</label>
+					<div class="col-lg-8">
+						<input type="text" class="form-control"
+							ng-model="selectedProductName" disabled>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-lg-4 custom-control-label">{{'SERVICE_TICKET_TYPE' |
+						translate}}</label>
+					<div class="col-lg-8">
+						<select class="form-control input-md"
+							ng-model="serviceTypeDefault">
+							<option ng-selected="{{setting.type == serviceTypeDefault}}"
+								ng-repeat="setting in serviceTicketTypes"
+								value="{{setting.type}}">{{setting.description}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="error" ng-if="error">{{error}}</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button type="button" ng-click="cancel()" id="cancel-btn"
+				class="btn btn-secondary btn-lg">{{'CANCEL' | translate}}</button>
+
+			<button type="submit" id="save-btn" class="btn btn-primary btn-lg"
+				ng-click="createNewServiceTicket()">{{'SAVE' | translate}}</button>
+		</div>
+	</fieldset>
+</form>
+<div class="overlay-create container-fluid">
+	<div class="row">
+		<span><h4>{{'SERVICE_TICKET_CONTINUE_CONFIRM' | translate}}</h4></span>
+		<div class="row modal-footer">
+			<button type="button" class="btn btn-secondary btn-lg" ng-click="hideConfirmation()">{{'CONFIRM_YES' | translate}}</button>
+			<button type="button" class="btn btn-primary btn-lg" ng-click="cancel()">{{'CONFIRM_NO' | translate}}</button>
+		</div>
+	</div>
+</div>

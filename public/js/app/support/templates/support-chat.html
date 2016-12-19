@@ -1,0 +1,35 @@
+
+<div class="container-fluid" style="min-height: 1200px">
+	<section class="row"
+		style="background-color: #f1f2f2; padding: 50px 30px 100px 50px">
+		<div class="col-md-3 text-center">
+			<img src="img/agent.png">
+		</div>
+		<div class="col-md-9" id="header-section">
+			<p>Running into issues?</p>
+			<h1>We're here to help.</h1>
+			<p>Whether you need information about a new product, help
+				installing the one you just bought, or simply support using it to
+				its fullest, do not hesitate to reach out. Our experts are available
+				24/7 via chat, video chat, and phone, and look forward to connecting
+				with you.</p>
+			<div class="row">
+				<div class="col-xs-3">
+					<a class="btn btn-default" role="button" id="textChatBtn1"
+						ng-click="initiateTextChat()">TEXT CHAT</a>
+				</div>
+				<div class="col-xs-3"></div>
+				<div class="col-xs-6">
+					<a class=" btn btn-default" role="button" id="videoChatBtn1"
+						ng-click="initiateVideoChat()">VIDEO CHAT</a>
+				</div>
+			</div>
+			<div class="row"></div>
+		</div>
+	</section>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var $draggable = $('.draggable').draggabilly();
+	});
+</script>

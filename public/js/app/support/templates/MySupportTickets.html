@@ -1,0 +1,84 @@
+<div class="container-fluid">
+	<!-- List of Support Tickets -->
+
+	<h1 class="pageTitle">{{'MY_SUPPORT_TICKETS' | translate}}</h1>
+	<div class="btn-group">
+		<a class="btn btn-default" ng-click="refreshTicketsView()">
+			<i class="fa fa-refresh" title="Refresh"></i>
+		</a>
+	</div>
+	<ul class="nav nav-tabs">
+
+		<li class="active col-xs-6"><a data-toggle="tab"
+			href="#myOpenServiceTickets">{{'MY_OPEN_SERVICE_TICKETS' | translate}}</a></li>
+		<li class="col-xs-6" class="col-xs-6"><a data-toggle="tab" href="#myClosedServiceTickets">{{'MY_CLOSED_SERVICE_TICKETS' | translate}}</a></li>
+	</ul>
+
+	<section>
+		<div class="tab-content">
+
+
+			<div id="myOpenServiceTickets" class="tab-pane fade in active">
+				<div ng-repeat="ticket in openServiceTickets">
+					<a id="p_{{ticket.id}}" ng-click="openTicketDetails(ticket.id)" style="cursor:pointer">
+						<div class="myRegisteredProduct-item row">
+							<div class="col-xs-2 col-md-2 text-center img-col">
+								<i class="fa fa-ticket fa-4x text-center"></i>
+							</div>
+							<div class="col-xs-2"></div>
+							<div class="col-xs-8 col-md-10  detail-col">
+								<div class="row">
+									<div class="col-xs-12">
+										<h5 class="price item-attr strong">{{ticket.ticketNumber}}</h5>
+										<div class="price item-attr strong">
+											{{'SERVICE_TICKET_DESCRIPTION' | translate}}:<span>
+												{{ticket.shortDescription}}</span>
+										</div>
+										<div class="price item-attr strong">
+											{{'SERVICE_TICKET_STATUS' | translate}}:<span>
+												{{ticket.statusDescription}} </span>
+										</div>
+										<div class="price item-attr strong">
+											{{'SERVICE_TICKET_MODIFIED_AT' | translate}}:<span>
+												{{ticket.metadata.modifiedAt | date:"MM/dd/yyyy"}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			<div id="myClosedServiceTickets" class="tab-pane fade disabled">
+				<div ng-repeat="ticket in closedServiceTickets">
+					<a id="p_{{ticket.id}}" ng-click="openTicketDetails(ticket.id)">
+						<div class="myRegisteredProduct-item row">
+							<div class="col-xs-2 col-md-2 text-center img-col">
+								<i class="fa fa-ticket fa-4x text-center"></i>
+							</div>
+							<div class="col-xs-10 col-md-10  detail-col">
+								<div class="row">
+									<div class="col-xs-12">
+										<h5 class="price item-attr strong">{{ticket.ticketNumber}}</h5>
+										<div class="price item-attr strong">
+											{{'SERVICE_TICKET_DESCRIPTION' | translate}}:<span>
+												{{ticket.shortDescription}}</span>
+										</div>
+										<div class="price item-attr strong">
+											{{'SERVICE_TICKET_STATUS' | translate}}:<span>
+												{{ticket.statusDescription}} </span>
+										</div>
+										<div class="price item-attr strong">
+											{{'SERVICE_TICKET_MODIFIED_AT' | translate}}:<span>
+												{{ticket.metadata.modifiedAt | date:"MM/dd/yyyy"}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>

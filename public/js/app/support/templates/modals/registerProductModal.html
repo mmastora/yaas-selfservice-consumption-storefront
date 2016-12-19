@@ -1,0 +1,76 @@
+<!-- Modal Header -->
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal"
+		aria-label="Close" ng-click="cancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+	<h4 class="modal-title" id="registerProductModal">{{'REGISTER_NEW_PRODUCT'| translate}}</h4>
+</div>
+
+<!-- Modal Body -->
+
+
+<form class="form-horizontal"
+	ng-submit="registerProduct(selectedProductId)"  novalidate stop-event="touchend">
+	<fieldset>
+		<div class="modal-body">
+			<div class="container-fluid">
+				<div class="form-group">
+					<label for="inputproduct" class="col-md-4 custom-control-label">
+						{{'PRODUCT'| translate}}:</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control input-md"
+							ng-model="selectedProductName" ng-readonly="true" />
+					</div>
+
+				</div>
+
+				<!--image-->
+				<div class="form-group">
+					<div class="col-md-4"></div>
+					<div class="col-md-8">
+						<img ng-src="{{selectedProductImage}}" class="img-responsive"
+							height="100" width="100" style="align: center" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inputserial" class="col-md-4 custom-control-label">
+						{{'SERIAL_NUMBER'| translate}}:</label>
+					<div class="col-md-8">
+						<input type="text" class="form-control input-md"
+							ng-model="newProductRegistration.productSerialNo"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputpurchasedAt" class="col-md-4 custom-control-label">
+						{{'PURCHASED_AT'| translate}}:</label>
+					<div class="col-md-8">
+						<select class="form-control input-md" ng-model="productStoreModel">
+							<option ng-selected="{{store.id == productStoreModel}}"
+								ng-repeat="store in stores | orderBy:'storeName'"
+								value="{{store.id}}">{{store.storeName}}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputpurchasedDate"
+						class="col-md-4 custom-control-label">{{'PURCHASED_DATE'| translate}}:</label>
+					<div class="col-md-8">
+						<input type="text" id="date" name="date"
+							class="form-control input-md"
+							ng-model="newProductRegistration.purchasedDate" style="cursor:pointer; background-color:white" readonly datepkr/>
+					</div>
+				</div>
+				<div ng-if="productRegisterErrorMessage1" class="error"
+					ng-controller="SupportCtrl">{{productRegisterErrorMessage1}}
+				</div>
+			</div>
+			<!-- Modal Footer -->
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" ng-click="cancel()">{{'CLOSE'| translate}}</button>
+				<button type="submit" class="btn btn-primary">{{'REGISTER'| translate}}</button>
+			</div>
+		</div>
+	</fieldset>
+</form>
