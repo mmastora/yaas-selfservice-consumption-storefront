@@ -15,9 +15,11 @@ Install node and npm:
 
 [Download from the Node site](http://nodejs.org/)
 
-Alternatively for MacOS only it can be done using the below command
+Alternatively for MacOS only, it can be done using the below command
 
-	$ brew install node	
+	$ brew install node
+	
+The remaining sections below apply to both Windows and MacOS.
 
 Install grunt:
 
