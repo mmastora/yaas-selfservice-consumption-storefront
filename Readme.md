@@ -13,9 +13,11 @@ a pre-configured store.  Feel free to take items through checkout, using any Str
 
 Install node and npm:
 
-	$ brew install node	# on MacOS
+[Download from the Node site](http://nodejs.org/)
 
-[Or download from the Node site](http://nodejs.org/)
+Alternatively for MacOS only it can be done using the below command
+
+	$ brew install node	
 
 Install grunt:
 
