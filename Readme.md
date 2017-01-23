@@ -1,12 +1,14 @@
 # hybris Store Template for the Cloud-based Commerce Services
 
-This project is an e-commerce front-end written in AngularJS that is meant to showcase the available commerce services and
-serve as starting point for creating a customized store front. 
+This project is an e-commerce front-end written in AngularJS that is meant to showcase the available commerce services and serve as a starting point for creating a customized store front. 
+This storefront template adds self service flavor to the existing yaas storefront, the details of which can be found [here](https://github.com/SAP/yaas-storefront)
+
+This template consumes microservices exposed by YAAS. For more information on microservices exposed by Self service package itself please visit [YAAS market place] (https://market.yaas.io/us/all/CECenter-Self-Service/7f6f056b-db07-4101-bfe9-b2b838ebb08c)
+
 
 ## Installation
 
-The following steps will demonstrate how to install and run the code on localhost.  At the end, you will be able to browse and "shop" in 
-a pre-configured store.  Feel free to take items through checkout, using any Stripe test credit card number (https://stripe.com/docs/testing).
+The following steps will demonstrate how to install and run the code on localhost.  At the end, you will be able to perform self service activities such as register your purchased  products, create service tickets, view sales orders, browse and "shop" in a pre-configured store.  Feel free to take items through checkout, using any Stripe test credit card number (https://stripe.com/docs/testing).
 
 ###  1. System requirements
 
