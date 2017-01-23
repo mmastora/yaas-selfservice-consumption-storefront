@@ -3,7 +3,7 @@
 This project is an e-commerce front-end written in AngularJS that is meant to showcase the available commerce services and serve as a starting point for creating a customized store front. 
 This storefront template adds self service flavor to the existing yaas storefront, the details of which can be found [here](https://github.com/SAP/yaas-storefront)
 
-This template consumes microservices exposed by YAAS. For more information on microservices exposed by Self service package itself please visit [YAAS market place] (https://market.yaas.io/us/all/CECenter-Self-Service/7f6f056b-db07-4101-bfe9-b2b838ebb08c)
+This template consumes microservices exposed by yaas. For more information on microservices exposed by Self service package itself please visit [yaas market place] (https://market.yaas.io/us/all/CECenter-Self-Service/7f6f056b-db07-4101-bfe9-b2b838ebb08c)
 
 
 ## Installation
@@ -14,9 +14,9 @@ The following steps will demonstrate how to install and run the code on localhos
 
 In order to build and run storefront, please install Node.js/npm.
 
-For Windows download and follow the instructions from the [Node site](http://nodejs.org/)
+For Windows download and follow the instructions from the [Node.js site](http://nodejs.org/)
 
-For MacOS, follow the steps below:-
+For OS X, follow the steps below:-
 
 1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) or else skip this step and go to next step.	
 	
@@ -25,7 +25,7 @@ For MacOS, follow the steps below:-
 	$ brew install node
 	
 	
-The remaining sections below apply to both Windows and MacOS.
+The remaining sections below apply to both Windows and OS X.
 
 Install grunt:
 
