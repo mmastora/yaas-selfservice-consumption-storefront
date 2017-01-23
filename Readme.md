@@ -1,8 +1,7 @@
 # hybris Store Template for the Cloud-based Commerce Services
 
 This project is an e-commerce front-end written in AngularJS that is meant to showcase the available commerce services and
-serve as starting point for creating a customized store front.
-
+serve as starting point for creating a customized store front. 
 
 ## Installation
 
@@ -11,14 +10,13 @@ a pre-configured store.  Feel free to take items through checkout, using any Str
 
 ###  1. System requirements
 
-Install node and npm:
+In order to build and run storefront, please install Node.js/npm.
 
-[Download from the Node site](http://nodejs.org/)
+For Windows download and follow the instructions from the [Node site](http://nodejs.org/)
 
-Alternatively for MacOS only, follow the steps below:-
+For MacOS, follow the steps below:-
 
-1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) or else skip this step and go to step 2.
-	
+1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) or else skip this step and go to next step.	
 	
 2. Install node and npm via homebrew using the command below
 
