@@ -17,7 +17,7 @@ Install node and npm:
 
 Alternatively for MacOS only, follow the steps below:-
 
-1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) Or else skip this step and go to step 2.
+1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) or else skip this step and go to step 2.
 	
 	
 2. Install node and npm via homebrew using the command below
