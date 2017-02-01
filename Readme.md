@@ -18,7 +18,7 @@ For Windows download and follow the instructions from the [Node.js site](http://
 
 For OS X, follow the steps below:-
 
-1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) or else skip this step and go to next step.	
+1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) or else skip this step and go to next step(Step #2).	
 	
 2. Install node and npm via homebrew using the command below
 
@@ -53,6 +53,10 @@ Start the project on localhost:9000 by executing:
 	$ npm start
 
 This will launch a storefront for an existing project against the "prod" environment.  Later, we will modify the application to go against your own project.
+
+###Support
+
+For questions or support, please feel free to post on [Hybris Experts Forum](https://experts.hybris.com/topics/yaas.html)
 
 
 ## Customization
@@ -344,7 +348,3 @@ We encourage contributions in the form of pull requests against the master branc
 ### License
  
 See the License.md file for complete license information.
-
-###Support
-
-For questions or support, please feel free to post on [Hybris Experts Forum](https://experts.hybris.com/topics/yaas.html)
