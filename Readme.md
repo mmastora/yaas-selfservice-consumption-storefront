@@ -18,9 +18,9 @@ For Windows download and follow the instructions from the [Node.js site](http://
 
 For OS X, follow the steps below:-
 
-1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/) or else skip this step and go to next step(Step #2).	
+1. If you do not have homebrew installed, please do so from [Homebrew website](http://brew.sh/). If you do skip this step and go to next step(Step #2).	
 	
-2. Install node and npm via homebrew using the command below
+2. Once you have confirmed homebrew is installed, next install node and npm via homebrew using the command below
 
 	$ brew install node
 	
